@@ -13,7 +13,8 @@ var VectorCanvas = new Class({
 
     options: {
         width: 500,
-        height: 500
+        height: 500,
+        color: '#fff'
     },
 
     svgns: "http://www.w3.org/2000/svg",
@@ -132,9 +133,9 @@ var VectorCanvas = new Class({
             node.coordsize = this.options.width + ' ' + this.options.height;
             node.style.width = this.options.width + 'px';
             node.style.height = this.options.height + 'px';
-            node.fillcolor = WorldMap.defaultFillColor;
+            node.fillcolor = this.options.color;
             node.stroked = false;
-            node.path = VectorCanvas.pathSvgToVml(config.path);
+            node.path = this.pathSvgToVml(config.path);
 
             scale = this.createVmlNode('skew');
             scale.on = true;

@@ -102,7 +102,7 @@ var MooVectorMap = new Class({
         this.resize();
         this.addResizeHandler();
         
-        this.canvas = new VectorCanvas(this.width, this.height);
+        this.canvas = new VectorCanvas(this.width, this.height, this.color);
         this.container.adopt(this.canvas.canvas);
         
         this.makeDraggable();
@@ -117,7 +117,8 @@ var MooVectorMap = new Class({
         this.applyMapPaths();
         
         this.setColors(this.apiParams.colors);
-        this.canvas.canvas.adopt(this.rootGroup);
+        //this.canvas.canvas.adopt(this.rootGroup);
+        this.canvas.canvas.appendChild(this.rootGroup);
         
         this.applyTransform();
         this.bindZoomButtons();
@@ -178,7 +179,9 @@ var MooVectorMap = new Class({
             path.setStrokeWidth(this.options.strokeWidth);
             path.id = 'moovectormap'+this.index+'_'+key;
             this.countries[key] = path;
-            path.inject(this.rootGroup);
+            //path.inject(this.rootGroup);
+            //this.rootGroup.adopt(path);
+            this.rootGroup.appendChild(path);
         }
     },
     
