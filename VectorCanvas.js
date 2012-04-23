@@ -1,4 +1,13 @@
-var VectorMap = new Class({
+/*
+---
+name: VectorCanvas
+description: 
+authors: David Greminger
+requires: []
+provides: VectorCanvas
+...
+*/
+var VectorCanvas = new Class({
 
     Implements: [Options, Events],
 
@@ -12,7 +21,9 @@ var VectorMap = new Class({
     canvas: null,
 
     initialize: function(options) {
-        this.setOptions(options);
+        if (options) {
+            this.setOptions(options);
+        }
 
         this.mode = window.SVGAngle ? 'svg': 'vml';
         
@@ -105,6 +116,14 @@ var VectorMap = new Class({
             node.setOpacity = function(opacity) {
                 this.setAttribute('fill-opacity', opacity);
             };
+            
+            node.setStrokeColor = function(color) {
+                this.setAttribute('stroke', color);
+            };
+            
+            node.setStrokeWidth = function(width) {
+                this.setAttribute('stroke-width', width);
+            };
         }
 
         else {
@@ -136,6 +155,14 @@ var VectorMap = new Class({
 
             node.setOpacity = function(opacity) {
                 this.getElementsByTagName('fill')[0].opacity = parseInt(opacity * 100) + '%';
+            };
+            
+            node.setStrokeColor = function(color) {
+                this.strokecolor = color;
+            };
+            
+            node.setStrokeWidth = function(width) {
+                this.strokeweight = width/10+"pt";
             };
         }
 
