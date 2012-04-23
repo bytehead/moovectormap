@@ -21,7 +21,7 @@ var MooVectorMap = new Class({
         scaleColor: ['#b6d6ff', '#005ace'],
         normalizeFunction: 'linear',
         strokeColor: '#000',
-        strokeWidth: 1.0,
+        strokeWidth: 0.5,
         showZoom: true
     },
     
@@ -72,8 +72,7 @@ var MooVectorMap = new Class({
         this.setOptions(options);        
         
         if (!element) {
-            this.destroy();
-            return;
+            return false;
         }
         
         this.container = document.id(element);
@@ -175,8 +174,8 @@ var MooVectorMap = new Class({
         for (var key in this.mapData.paths) {
             var path = this.canvas.createPath({path: this.mapData.paths[key].path});
             path.setFill(this.color);
-            path.setStrokeColor(this.canvas.mode, this.options.strokeColor);
-            path.setStrokeWidth(this.canvas.mode, this.options.strokeWidth);
+            path.setStrokeColor(this.options.strokeColor);
+            path.setStrokeWidth(this.options.strokeWidth);
             path.id = 'moovectormap'+this.index+'_'+key;
             this.countries[key] = path;
             path.inject(this.rootGroup);
@@ -244,8 +243,8 @@ var MooVectorMap = new Class({
         this.container.addEvent('mousemove', function(e){
             if (this.label.hasClass('visible')) {
                 this.label.setStyles({
-                    left: e.page.x-15-this.labelWidth,
-                    top: e.page.y-15-this.labelHeight
+                    left: e.page.x-5-this.labelWidth,
+                    top: e.page.y-5-this.labelHeight
                 })
             }
         }.bind(this));
