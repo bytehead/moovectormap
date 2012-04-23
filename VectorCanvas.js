@@ -30,7 +30,8 @@ var VectorCanvas = new Class({
         
         if (this.mode == 'svg') {
             this.createSvgNode = function(nodeName) {
-                return document.createElementNS(this.svgns, nodeName);
+                //var element = document.createElementNS(this.svgns, nodeName);
+                return new Element(nodeName);
             }
         } 
         

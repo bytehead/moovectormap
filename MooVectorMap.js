@@ -8,6 +8,30 @@ provides: MooVectorMap
 ...
 */
 
+/**
+ * workaround for the firefox svg bug
+ * source: https://github.com/mootools/mootools-core/issues/2331#issuecomment-5176626
+ * bugreport: https://bugzilla.mozilla.org/show_bug.cgi?id=740811
+ */
+(function(svgtags) {
+    var ns = 'http://www.w3.org/2000/svg',
+        methods = (function(proto, cls) {
+            var hash = {};
+            for (var f in proto) {
+                if (cls.hasOwnProperty(f)) {
+                    hash[f] = proto[f];
+                }
+            }
+            return hash;
+        })(Element.prototype, Element);
+
+    svgtags.each(function(tag) {
+        Element.Constructors[tag] = function(props) {
+            return (Object.append(document.createElementNS(ns, tag), methods).set(props));
+        };
+    });
+})(['svg', 'path', 'g']);
+
 var MooVectorMap = new Class({
     
     Implements: [Options, Events],
@@ -117,7 +141,6 @@ var MooVectorMap = new Class({
         this.applyMapPaths();
         
         this.setColors(this.apiParams.colors);
-        //this.canvas.canvas.adopt(this.rootGroup);
         this.canvas.canvas.appendChild(this.rootGroup);
         
         this.applyTransform();
@@ -148,7 +171,7 @@ var MooVectorMap = new Class({
             this.width = this.container.getSize().x;
             this.height = this.container.getSize().y;
             this.resize();
-            this.canvas.setSize(map.width, map.height);
+            this.canvas.setSize(this.width, this.height);
             this.applyTransform();
         }.bind(this));
     },
@@ -196,7 +219,7 @@ var MooVectorMap = new Class({
                 if (this.options.hoverOpacity) {
                     path.setOpacity(this.options.hoverOpacity);
                 }
-
+                
                 if (this.options.hoverColor) {
                     path.currentFillColor = path.getFill()+'';
                     path.setFill(this.options.hoverColor);
@@ -246,8 +269,8 @@ var MooVectorMap = new Class({
         this.container.addEvent('mousemove', function(e){
             if (this.label.hasClass('visible')) {
                 this.label.setStyles({
-                    left: e.page.x-5-this.labelWidth,
-                    top: e.page.y-5-this.labelHeight
+                    left: e.page.x-10-this.labelWidth,
+                    top: e.page.y-10-this.labelHeight
                 })
             }
         }.bind(this));
