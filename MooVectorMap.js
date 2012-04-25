@@ -26,7 +26,7 @@ provides: MooVectorMap
         })(Element.prototype, Element);
 
     svgtags.each(function(tag) {
-        var svgNeedsPatching = !(document.createElementNS(ns, tag) instanceof Element);
+        var svgNeedsPatching = !Browser.ie ? !(document.createElementNS(ns, tag) instanceof Element) : false;
         
         Element.Constructors[tag] = svgNeedsPatching ? function(props) {
             return (Object.append(
