@@ -164,7 +164,9 @@ var VectorCanvas = new Class({
             };
             
             node.setStrokeWidth = function(width) {
-                this.strokeweight = width/10+"pt";
+                this.stroked = false;
+                if (width > 0) this.stroked = true;
+                this.strokeweight = width/5;
             };
         }
 
