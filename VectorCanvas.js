@@ -21,7 +21,7 @@ var VectorCanvas = new Class({
     mode: 'svg',
     canvas: null,
 
-    initialize: function(options) {
+    initialize: function(width, height, color) {
         var options = {
             width: width,
             height: height,
