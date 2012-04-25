@@ -22,9 +22,13 @@ var VectorCanvas = new Class({
     canvas: null,
 
     initialize: function(options) {
-        if (options) {
-            this.setOptions(options);
-        }
+        var options = {
+            width: width,
+            height: height,
+            color: color
+        };
+        
+        this.setOptions(options);
 
         this.mode = window.SVGAngle ? 'svg': 'vml';
         
