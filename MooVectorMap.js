@@ -134,7 +134,7 @@ var MooVectorMap = new Class({
         this.resize();
         this.addResizeHandler();
         
-        this.canvas = new VectorCanvas(this.width, this.height, this.color);
+        this.canvas = new VectorCanvas(this.options.width, this.options.height, this.options,color);
         this.container.adopt(this.canvas.canvas);
         
         this.makeDraggable();
