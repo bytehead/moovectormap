@@ -52,8 +52,9 @@ var MooVectorMap = new Class({
         scaleColor: ['#b6d6ff', '#005ace'],
         normalizeFunction: 'linear',
         strokeColor: '#000',
-        strokeWidth: 0.5,
-        showZoom: true
+        strokeWidth: 1.0,
+        showZoom: true,
+        colors: 1
     },
     
     apiParams: {
@@ -147,7 +148,7 @@ var MooVectorMap = new Class({
         
         this.applyMapPaths();
         
-        this.setColors(this.apiParams.colors);
+        this.setColors(this.options.colors);
         this.canvas.canvas.appendChild(this.rootGroup);
         
         this.applyTransform();
@@ -209,8 +210,6 @@ var MooVectorMap = new Class({
             path.setStrokeWidth(this.options.strokeWidth);
             path.id = 'moovectormap'+this.index+'_'+key;
             this.countries[key] = path;
-            //path.inject(this.rootGroup);
-            //this.rootGroup.adopt(path);
             this.rootGroup.appendChild(path);
         }
     },
