@@ -26,8 +26,15 @@ provides: MooVectorMap
         })(Element.prototype, Element);
 
     svgtags.each(function(tag) {
-        Element.Constructors[tag] = function(props) {
-            return (Object.append(document.createElementNS(ns, tag), methods).set(props));
+        var svgNeedsPatching = !(document.createElementNS(ns, tag) instanceof Element);
+        
+        Element.Constructors[tag] = svgNeedsPatching ? function(props) {
+            return (Object.append(
+                document.createElementNS(ns, tag), 
+                methods).set(props));
+        } : function(props) {
+            return document.createElementNS(ns, tag)
+                .set(props);
         };
     });
 })(['svg', 'path', 'g']);
