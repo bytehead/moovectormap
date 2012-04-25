@@ -54,7 +54,9 @@ var MooVectorMap = new Class({
         strokeColor: '#000',
         strokeWidth: 1.0,
         showZoom: true,
-        colors: 1
+        colors: 1,
+        width: 300,
+        height: 300
     },
     
     apiParams: {
@@ -134,7 +136,7 @@ var MooVectorMap = new Class({
         this.resize();
         this.addResizeHandler();
         
-        this.canvas = new VectorCanvas(this.options.width, this.options.height, this.options,color);
+        this.canvas = new VectorCanvas(this.options.width, this.options.height, this.options.color);
         this.container.adopt(this.canvas.canvas);
         
         this.makeDraggable();
