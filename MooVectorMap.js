@@ -216,7 +216,8 @@ var MooVectorMap = new Class({
     },
     
     addMouseOverEvent: function() {
-        this.container.getElements(this.canvas.mode == 'svg' ? 'path' : 'shape').addEvent('mouseover', function(e){
+        var element = this.canvas.mode == 'svg' ? 'path' : 'shape';
+        this.container.addEvent('mouseover:relay('+element+')', function(e){
             var path = e.target,
             code = e.target.id.split('_').pop();
             
@@ -247,7 +248,8 @@ var MooVectorMap = new Class({
     },
     
     addMouseOutEvent: function() {
-        this.container.getElements(this.canvas.mode == 'svg' ? 'path' : 'shape').addEvent('mouseout', function(e){
+        var element = this.canvas.mode == 'svg' ? 'path' : 'shape';
+        this.container.addEvent('mouseout:relay('+element+')', function(e){
             var path = e.target,
             code = e.target.id.split('_').pop();
             
@@ -264,7 +266,8 @@ var MooVectorMap = new Class({
     },
     
     addClickEvent: function() {
-        this.container.getElements(this.canvas.mode == 'svg' ? 'path' : 'shape').addEvent('click', function(e){
+        var element = this.canvas.mode == 'svg' ? 'path' : 'shape';
+        this.container.addEvent('click:relay(' + element + ')', function(e){
             var path = e.target,
             code = e.target.id.split('_').pop();
             this.fireEvent(this.apiEvents.onRegionClick, [e, code]);
