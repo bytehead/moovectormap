@@ -56,7 +56,13 @@ var MooVectorMap = new Class({
         showZoom: true,
         colors: 1,
         width: 300,
-        height: 300
+        height: 300,
+        events: {
+            onLabelShow: true,
+            onRegionOver: true,
+            onRegionOut: true,
+            onRegionClick: true
+        }
     },
     
     apiParams: {
@@ -158,10 +164,10 @@ var MooVectorMap = new Class({
         
         this.mapIndex++;
         
-        this.addMouseOverEvent();
-        this.addMouseOutEvent();
-        this.addClickEvent();
-        this.addMouseMoveEvent();
+        if (this.options.events.onRegionOver) this.addMouseOverEvent();
+        if (this.options.events.onRegionOut) this.addMouseOutEvent();
+        if (this.options.events.onRegionClick) this.addClickEvent();
+        if (this.options.events.onLabelShow) this.addMouseMoveEvent();
     },
     
     applySettings: function() {
@@ -238,7 +244,7 @@ var MooVectorMap = new Class({
             this.label.set('text', this.mapData.paths[code].name);
             this.fireEvent(this.apiEvents.onLabelShow, [e, this.label, code]);
             
-            if (!e.event.defaultPrevented) {
+            if (!e.event.defaultPrevented && this.options.events.onLabelShow) {
                 this.label.setStyle('display', 'block').addClass('visible');
                 
                 this.labelWidth = this.label.getSize().x;
