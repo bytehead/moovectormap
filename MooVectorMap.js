@@ -13,31 +13,33 @@ provides: MooVectorMap
  * source: https://github.com/mootools/mootools-core/issues/2331#issuecomment-5176626
  * bugreport: https://bugzilla.mozilla.org/show_bug.cgi?id=740811
  */
-(function(svgtags) {
-    var ns = 'http://www.w3.org/2000/svg',
-        methods = (function(proto, cls) {
-            var hash = {};
-            for (var f in proto) {
-                if (cls.hasOwnProperty(f)) {
-                    hash[f] = proto[f];
-                }
-            }
-            return hash;
-        })(Element.prototype, Element);
+ (function(svgtags) {
+     if (!Browser.ie) {
+         var ns = 'http://www.w3.org/2000/svg',
+             methods = (function(proto, cls) {
+                 var hash = {};
+                 for (var f in proto) {
+                     if (cls.hasOwnProperty(f)) {
+                         hash[f] = proto[f];
+                     }
+                 }
+                 return hash;
+             })(Element.prototype, Element);
 
-    svgtags.each(function(tag) {
-        var svgNeedsPatching = !Browser.ie ? !(document.createElementNS(ns, tag) instanceof Element) : false;
-        
-        Element.Constructors[tag] = svgNeedsPatching ? function(props) {
-            return (Object.append(
-                document.createElementNS(ns, tag), 
-                methods).set(props));
-        } : function(props) {
-            return document.createElementNS(ns, tag)
-                .set(props);
-        };
-    });
-})(['svg', 'path', 'g']);
+         svgtags.each(function(tag) {
+             var svgNeedsPatching = !(document.createElementNS(ns, tag) instanceof Element);
+
+             Element.Constructors[tag] = svgNeedsPatching ? function(props) {
+                 return (Object.append(
+                     document.createElementNS(ns, tag), 
+                     methods).set(props));
+             } : function(props) {
+                 return document.createElementNS(ns, tag)
+                     .set(props);
+             };
+         });
+     }
+ })(['svg', 'path', 'g']);
 
 var MooVectorMap = new Class({
     
