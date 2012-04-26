@@ -513,5 +513,15 @@ var MooVectorMap = new Class({
     
     getCountryPath: function(cc) {
         return document.id(cc)[0];
+    },
+    
+    getPathIdFromName: function(name) {
+        for (var key in this.mapData.paths) {
+            if (this.mapData.paths[key].name.toLowerCase() == name.toLowerCase()) {
+                return key;
+            }
+        }
+        
+        return null;
     }
 });
